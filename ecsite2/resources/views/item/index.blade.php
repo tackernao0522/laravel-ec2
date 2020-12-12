@@ -14,5 +14,8 @@
     </div>
     @endforeach
   </div>
+  <div class="row justify-content-center">
+    {{ $items->links() }}
+  </div>
 </div>
 @endsection
