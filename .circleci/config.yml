@@ -12,19 +12,19 @@ jobs:
       - save_cache:
           key: composer-v1-{{ checksum "./ecsite2/composer.lock" }}
           paths:
-            - ./laravel-ci2/vendor
+            - ./ecsite2/vendor
       - restore_cache:
           key: npm-v1-{{ checksum "./ecsite2/package-lock.json" }}
       - run:
           name: npm ci
           command: |
-            if [ ! -d ./laravel-ci2/node_modules ]; then
-              cd laravel-ci2/; npm ci
+            if [ ! -d ./ecsite2/node_modules ]; then
+              cd ecsite2/; npm ci
             fi
       - save_cache:
           key: npm-v1-{{ checksum "./ecsite2/package-lock.json" }}
           paths:
-            - ./laravel-ci2/node_modules
+            - ./ecsite2/node_modules
       - run: cd ecsite2/; npm run dev
       - run:
           name: php test
