@@ -48,4 +48,7 @@ jobs:
             dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: php test
-          command: php ./ecsite2/vendor/bin/phpunit --configuration=./ecsite2/phpunit.xml
+          command: |
+            cd ecsite2/; php artisan config:clear
+            cd ecsite2/; php artisan config:cache
+            php ./ecsite2/vendor/bin/phpunit --configuration=./ecsite2/phpunit.xml
