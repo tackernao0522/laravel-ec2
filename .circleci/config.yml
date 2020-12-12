@@ -46,9 +46,8 @@ jobs:
             sudo apt-get install libpq-dev
             sudo docker-php-ext-install pdo_pgsql
             dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: cd ecsite2/; php artisan config:clear
+      - run: cd ecsite2/; php artisan config:cache
       - run:
           name: php test
-          command: |
-            php artisan config:clear
-            php artisan config:cache
-            php ./ecsite2/vendor/bin/phpunit --configuration=./ecsite2/phpunit.xml
+          command: php ./ecsite2/vendor/bin/phpunit --configuration=./ecsite2/phpunit.xml
