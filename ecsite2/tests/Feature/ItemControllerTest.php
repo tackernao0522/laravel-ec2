@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class ItemControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testIndex()
     {
         $response = $this->get('/');
