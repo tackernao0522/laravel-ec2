@@ -17,8 +17,8 @@ class HomeControllerTest extends TestCase
     public function testExample()
     {
         $response = $this
-        ->actingAs(User::find(1))
-        ->get('/home');
+            ->actingAs(User::find(1))
+            ->get('/home');
 
         $response->assertStatus(200)
             ->assertViewIs('home')
