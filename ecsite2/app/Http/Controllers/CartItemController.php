@@ -19,6 +19,6 @@ class CartItemController extends Controller
                 'quantity' => \DB::raw('quantity + ' . $request->post('quantity')), // 数量
             ]
         );
-        return redirect('/');
+        return redirect('/')->with('flash_message', 'カートに追加しました');
     }
 }
