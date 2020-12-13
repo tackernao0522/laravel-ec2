@@ -13,7 +13,6 @@ class ItemControllerTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertViewIs('item.index')
-            ->assertSee('商品検索');
+            ->assertViewIs('item.index');
     }
 }
