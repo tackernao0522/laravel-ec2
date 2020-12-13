@@ -17,4 +17,9 @@ class ItemController extends Controller
 
         return view('item.index', ['items' => $items]);
     }
+
+    public function show(Item $item)
+    {
+        return view('item.show', ['item' => $item]);
+    }
 }
