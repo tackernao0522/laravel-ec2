@@ -13,7 +13,7 @@
 
 Route::get('/', 'ItemController@index')->name('item.index');
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
-Route::post('/cartitem', 'CartItemController@store');
+Route::post('/cartitem', 'CartItemController@store')->name('cartitem');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
