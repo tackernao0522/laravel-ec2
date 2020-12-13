@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::paginate(15);
+        if ($request->has('keyword')) {
+            $items = Item::where('name', 'like', '%' . $request->get('keyword') . '%')->paginate(15);
+        } else {
+            $items = Item::paginate(15);
+        }
 
         return view('item.index', ['items' => $items]);
     }
