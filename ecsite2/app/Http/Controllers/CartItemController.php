@@ -10,26 +10,33 @@ class CartItemController extends Controller
 {
     public function index()
     {
-        $cartitems = CartItem::select('cart_items.*', 'items_name', 'items.amount')
+        $cartitems = CartItem::select('cart_items.*', 'items.name', 'items.amount')
             ->where('user_id', Auth::id())
             ->join('items', 'items.id', '=', 'cart_items.item_id')
             ->get();
         $subtotal = 0;
-        foreach($cartitems as $cartitem) {
+        foreach ($cartitems as $cartitem) {
             $subtotal += $cartitem->amount * $cartitem->quantity;
         }
         return view('cartitem/index', ['cartitems' => $cartitems, 'subtotal' => $subtotal]);
     }
 
     public function store(Request $request)
-    {
-        CartItem::updateOrCreate( // updateOrCreateはレコードの登録と更新を兼ねるメソッド
+    {  // postgresの場合は下記の書き方になる
+        if (CartItem::where([['user_id', Auth::id()], ['item_id', $request->post('item_id')]])->exists()) {
+            $cartitem = CartItem::select('cart_items.quantity')
+                ->where([['user_id', Auth::id()], ['item_id', $request->post('item_id')]])->first();
+            $cartitemquantity = $cartitem->quantity +  $request->post('quantity');
+        } else {
+            $cartitemquantity = $request->post('quantity');
+        }
+        CartItem::updateOrCreate(
             [
-                'user_id' => Auth::id(), // ログインしているユーザー
-                'item_id' => $request->post('item_id'), // 商品ID
+                'user_id' => Auth::id(),
+                'item_id' => $request->post('item_id'),
             ],
             [
-                'quantity' => \DB::raw('quantity + ' . $request->post('quantity')), // 数量
+                'quantity' => $cartitemquantity,
             ]
         );
         return redirect('/')->with('flash_message', 'カートに追加しました');
