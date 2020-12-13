@@ -8,13 +8,12 @@ use Tests\TestCase;
 
 class ItemControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testIndex()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertViewIs('item.index');
+            ->assertViewIs('item.index')
+            ->assertSee('商品検索');
     }
 }
