@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Auth;
 
 class CartItemController extends Controller
 {
+    public function index()
+    {
+        $cartitems = CartItem::select('cart_items.*', 'items_name', 'items.amount')
+            ->where('user_id', Auth::id())
+            ->join('items', 'items.id', '=', 'cart_items.item_id')
+            ->get();
+        $subtotal = 0;
+        foreach($cartitems as $cartitem) {
+            $subtotal += $cartitem->amount * $cartitem->quantity;
+        }
+        return view('cartitem/index', ['cartitems' => $cartitems, 'subtotal' => $subtotal]);
+    }
+
     public function store(Request $request)
     {
         CartItem::updateOrCreate( // updateOrCreateはレコードの登録と更新を兼ねるメソッド
