@@ -3,19 +3,11 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3-node-browsers
-      - image: circleci/postgres:11.6-alpine
-        environment:
-          POSTGRES_DB: laraec
-          POSTGRES_USER: default
-          POSTGRES_PASSWORD: secret
+      - image: circleci/mysql:5.7
     environment:
-      APP_ENV: testing
-      DB_CONNECTION: pgsql
-      DB_HOST: localhost
-      DB_PORT: 5432
-      DB_DATABASE: laraec
-      DB_USERNAME: default
-      DB_PASSWORD: secret
+      - APP_ENV: testing
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true;
     steps:
       - checkout
       - run: sudo composer self-update --1
@@ -40,12 +32,12 @@ jobs:
             - ./ecsite2/node_modules
       - run: cd ecsite2/; npm run dev
       - run:
-          name: get ready for postgres
+          name: get ready for mysql
           command: |
             sudo apt-get update
-            sudo apt-get install libpq-dev
-            sudo docker-php-ext-install pdo_pgsql
-            dockerize -wait tcp://localhost:5432 -timeout 1m
+            sudo apt-get install default-mysql-client
+            sudo docker-php-ext-install pdo_mysql
+            dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: cd ecsite2/; php artisan migrate
       - run: cd ecsite2/; php artisan db:seed
       - run:
