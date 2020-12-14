@@ -8,7 +8,6 @@ jobs:
           MYSQL_DATABASE: default
           MYSQL_USER: default
           MYSQL_PASSWORD: secret
-          MYSQL_ROOT_PASSWORD: root
     environment:
       APP_ENV: testing
       DB_CONNECTION: mysql
@@ -44,7 +43,7 @@ jobs:
           name: get ready for mysql
           command: |
             sudo apt-get update
-            sudo apt-get install libmysqlclient-dev
+            sudo apt-get install default-mysql-client
             sudo docker-php-ext-install pdo_mysql
             dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: cd ecsite2/; php artisan migrate
