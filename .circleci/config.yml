@@ -44,7 +44,7 @@ jobs:
           name: get ready for mysql
           command: |
             sudo apt-get update
-            sudo apt-get install sudo apt install libmysqlclient-dev
+            sudo apt-get install libmysqlclient-dev
             sudo docker-php-ext-install pdo_mysql
             dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: cd ecsite2/; php artisan migrate
