@@ -9,9 +9,6 @@ jobs:
       - APP_KEY: base64:3Q8fUzuSApciwiwHLgVBp/XdNK0SyhaHS7rp3Ib6g8c=
       - DB_CONNECTION: circle_test
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
-
-    working_directory: ~/repo
-
     steps:
       - checkout
       - run: sudo composer self-update --1
