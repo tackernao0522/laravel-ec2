@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', 'ItemController@index')->name('item.index');
-Route::get('/item/{item}', 'ItemController@show')->name('item.show');
-Route::get('/cartitem', 'CartItemController@index')->name('cartitem');
+Route::get('/', 'ItemController@index');
+Route::get('/item/{item}', 'ItemController@show');
+Route::get('/cartitem', 'CartItemController@index');
 Route::post('/cartitem', 'CartItemController@store');
-Route::put('/cartitem/{cartitem}', 'CartItemController@update');
 Route::delete('/cartitem/{cartitem}', 'CartItemController@destroy');
+Route::put('/cartitem/{cartitem}', 'CartItemController@update');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

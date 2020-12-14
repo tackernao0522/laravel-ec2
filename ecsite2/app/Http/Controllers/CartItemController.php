@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\CartItem;
-use App\Item;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,31 +22,23 @@ class CartItemController extends Controller
     }
 
     public function store(Request $request)
-    {  // postgresの場合は下記の書き方になる
-        if (CartItem::where([['user_id', Auth::id()], ['item_id', $request->post('item_id')]])->exists()) {
-            $cartitem = CartItem::select('cart_items.quantity')
-                ->where([['user_id', Auth::id()], ['item_id', $request->post('item_id')]])->first();
-            $cartitemquantity = $cartitem->quantity +  $request->post('quantity');
-        } else {
-            $cartitemquantity = $request->post('quantity');
-        }
+    {
         CartItem::updateOrCreate(
             [
                 'user_id' => Auth::id(),
                 'item_id' => $request->post('item_id'),
             ],
             [
-                'quantity' => $cartitemquantity,
+                'quantity' => \DB::raw('quantity + ' . $request->post('quantity')),
             ]
         );
+
         return redirect('/')->with('flash_message', 'カートに追加しました');
     }
 
     public function update(Request $request, CartItem $cartItem)
     {
-        $cartitem = \App\CartItem::where('quantity')->get();
-        dd($cartitem);
-        $cartItem->quantity = $request->quantity;
+        $cartItem->quantity = $request->post('quantity');
         $cartItem->save();
         return redirect('cartitem')->with('flash_message', 'カートを更新しました');
     }

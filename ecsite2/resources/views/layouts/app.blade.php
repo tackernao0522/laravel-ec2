@@ -56,7 +56,7 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a href="{{ route('cartitem') }}" class="nav-link">
+                            <a href="/cartitem" class="nav-link">
                                 カート
                             </a>
                         </li>

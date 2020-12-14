@@ -29,7 +29,7 @@
             <form method="POST" action="/cartitem/{{ $cartitem->id }}">
               @method('DELETE')
               @csrf
-              <button type="submit" class="btn btn-primary mr-1">カートから削除する</button>
+              <button type="submit" class="btn btn-primary ml-1">カートから削除する</button>
             </form>
           </div>
         </div>
