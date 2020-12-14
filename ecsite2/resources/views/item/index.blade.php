@@ -12,14 +12,14 @@
     <div class="col-md-4 mb-2">
       <div class="card">
         <div class="card-header">
-          <a href="{{ route('item.show', ['item' => $item]) }}">{{ $item->name }}</a>
+          <a href="/item/{{ $item->id }}">{{ $item->name }}</a>
         </div>
         <div class="card-body">
           {{ $item->amount }}円
         </div>
         @auth
-        <form method=POST action="{{ route('cartitem')}}" class="form-inline m-1">
-          @csrf
+        <form method="POST" action="cartitem" class="form-inline m-1">
+          {{ csrf_field() }}
           <select name="quantity" class="form-control col-md-2 mr-1">
             <option selected>1</option>
             <option>2</option>
