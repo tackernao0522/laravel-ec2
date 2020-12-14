@@ -41,10 +41,10 @@ jobs:
             - ./ecsite2/node_modules
       - run: cd ecsite2/; npm run dev
       - run:
-          name: get ready for postgres
+          name: get ready for mysql
           command: |
             sudo apt-get update
-            sudo apt-get install libpq-dev
+            sudo apt-get install mysql-dev
             sudo docker-php-ext-install pdo_mysql
             dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: cd ecsite2/; php artisan migrate
