@@ -36,15 +36,18 @@ class CartItemController extends Controller
         return redirect('/')->with('flash_message', 'カートに追加しました');
     }
 
-    public function update(Request $request, CartItem $cartItem)
+    public function update(Request $request, int $cartitem)
     {
-        $cartItem->quantity = $request->post('quantity');
+        $cartItem = CartItem::find($cartitem);
+        $cartItem->quantity = $request->quantity;
         $cartItem->save();
         return redirect('cartitem')->with('flash_message', 'カートを更新しました');
     }
 
-    public function destroy(CartItem $cartItem)
+    public function destroy(int $cartitem)
     {
+        $cartItem = CartItem::find($cartitem);
+
         $cartItem->delete();
 
         return redirect('cartitem')->with('flash_message', 'カートから削除しました');
